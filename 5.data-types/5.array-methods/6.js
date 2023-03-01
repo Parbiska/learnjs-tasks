@@ -1,0 +1,21 @@
+const Calculator = () => {
+	this.methods = {
+		'-': (a, b) => a - b,
+		'+': (a, b) => a + b,
+	}
+
+	this.calculate = function (str) {
+		const split = str.split(' '),
+			a = +split[0],
+			op = split[1],
+			b = +split[2]
+
+		if (isNaN(a) || !this.methods[op] || isNaN(b)) return NaN
+
+		return this.methods[op](a, b)
+	}
+
+	this.addMethod = function (name, func) {
+		this.methods[name] = func
+	}
+}
