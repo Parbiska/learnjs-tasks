@@ -1,0 +1,199 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <style>
+        th {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        td {
+            width: 150px;
+            white-space: nowrap;
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px;
+        }
+
+        .nw {
+            background-color: #999;
+        }
+
+        .n {
+            background-color: #03f;
+            color: #fff;
+        }
+
+        .ne {
+            background-color: #ff6;
+        }
+
+        .w {
+            background-color: #ff0;
+        }
+
+        .c {
+            background-color: #60c;
+            color: #fff;
+        }
+
+        .e {
+            background-color: #09f;
+            color: #fff;
+        }
+
+        .sw {
+            background-color: #963;
+            color: #fff;
+        }
+
+        .s {
+            background-color: #f60;
+            color: #fff;
+        }
+
+        .se {
+            background-color: #0c3;
+            color: #fff;
+        }
+    </style>
+
+    <style>
+        td {
+            position: relative;
+        }
+
+        textarea {
+            resize: none;
+            padding: 0;
+            display: block;
+            border: none;
+        }
+
+        textarea:focus {
+            border: none;
+        }
+
+        .button-container {
+            position: absolute;
+            z-index: 1;
+        }
+    </style>
+
+    <p>Кликните на ячейку таблицы, чтобы отредактировать её. Нажмите ОК или ОТМЕНА, когда закончите.</p>
+
+    <table id="bagua-table">
+        <tr>
+            <th colspan="3">Квадрат <em>Bagua</em>: Направление, Элемент, Цвет, Значение</th>
+        </tr>
+        <tr>
+            <td class="nw"><strong>Северо-Запад</strong>
+                <br>Металл
+                <br>Серебро
+                <br>Старейшины
+            </td>
+            <td class="n"><strong>Север</strong>
+                <br>Вода
+                <br>Синий
+                <br>Перемены
+            </td>
+            <td class="ne"><strong>Северо-Восток</strong>
+                <br>Земля
+                <br>Жёлтый
+                <br>Направление
+            </td>
+        </tr>
+        <tr>
+            <td class="w"><strong>Запад</strong>
+                <br>Металл
+                <br>Золото
+                <br>Молодость
+            </td>
+            <td class="c"><strong>Центр</strong>
+                <br>Всё
+                <br>Пурпурный
+                <br>Гармония
+            </td>
+            <td class="e"><strong>Восток</strong>
+                <br>Дерево
+                <br>Синий
+                <br>Будущее
+            </td>
+        </tr>
+        <tr>
+            <td class="sw"><strong>Юго-Запад</strong>
+                <br>Земля
+                <br>Коричневый
+                <br>Спокойствие
+            </td>
+            <td class="s"><strong>Юг</strong>
+                <br>Огонь
+                <br>Оранжевый
+                <br>Слава
+            </td>
+            <td class="se"><strong>Юго-Восток</strong>
+                <br>Дерево
+                <br>Зеленый
+                <br>Роман
+            </td>
+        </tr>
+
+    </table>
+
+
+    <script>
+        const table = document.getElementById('bagua-table')
+
+        const textarea = document.createElement('textarea')
+
+        let editMode = false
+
+        table.addEventListener('click', event => {
+            if (editMode) return
+            editMode = true
+
+            const el = event.target.closest('td')
+
+            if(!el) return editMode = false
+
+            textarea.value = el.innerHTML
+
+            textarea.style.width = el.clientWidth + 'px'
+            textarea.style.height = el.clientHeight + 'px'
+
+            el.insertAdjacentHTML('afterend',
+                '<div class="button-container"><button class="edit-ok">OK</button><button class="edit-cancel">CANCEL</button></div>'
+            )
+            el.replaceWith(textarea)
+
+            const buttonContainer = document.querySelector('.button-container')
+
+            document.querySelector('.edit-ok').addEventListener('click', function () {
+                el.innerHTML = textarea.value
+
+                textarea.replaceWith(el)
+
+                editMode = false
+                
+                buttonContainer.remove()
+            }, {})
+
+            document.querySelector('.edit-cancel').addEventListener('click', function () {
+                textarea.replaceWith(el)
+
+                editMode = false
+                
+                buttonContainer.remove()
+            })
+
+        })
+    </script>
+
+</body>
+
+</html>

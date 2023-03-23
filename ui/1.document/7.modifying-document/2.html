@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+<body>
+  <h1>Создать список</h1>
+
+  <script>
+    const ul = document.createElement('ul')
+    document.body.append(ul)
+
+    let result, arr = []
+    do {
+        result = prompt('Содержимое следующего пункта', '')
+
+        if(result) {
+            const li = document.createElement('li')
+            li.innerText = result
+
+            arr.push(li)
+        }
+    } while (result)
+
+    document.body.append(...arr)
+  </script>
+
+</body>
+</html>
